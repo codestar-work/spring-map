@@ -1,0 +1,48 @@
+body {
+	background: #f8f8f8;
+}
+
+p {
+	text-align: justify;
+	text-overflow: ellipsis;
+}
+
+a {
+	color:#444;
+	transition: all 0.2s ease-in;
+}
+a:hover {
+	text-decoration: none;
+	color: #222;
+}
+
+.btn {
+	margin-bottom: 10px;
+}
+
+form > * {
+	margin-bottom: 10px;
+}
+
+#navigator {
+	height: 40px;
+	width: 100%;
+	background: lightslategray;
+	margin-bottom: 10px;
+	padding-top: 10px;
+}
+#navigator a {
+	color: white;
+	margin-right: 10px;
+}
+
+img.highlight {
+	max-width: 100%;
+	display: block;
+	margin: 0 auto;
+}
+
+div.highlight p {
+	margin-top: 10px;
+	text-align: justify;
+}
