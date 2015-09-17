@@ -7,8 +7,6 @@ public class Station {
 	public Long id;
 	public String state;
 	public String suburb;
-	public String address;
-	public String postcode;
 	public Double latitude;
 	public Double longitude;	
 }
