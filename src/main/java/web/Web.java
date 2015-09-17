@@ -10,7 +10,12 @@ import org.springframework.beans.factory.annotation.*;
 
 @Controller
 public class Web {
-	
+
+	SessionFactory factory = new Configuration()
+		// .addPackage("entity")
+		.addAnnotatedClass(Station.class)
+		.buildSessionFactory();
+		
 	@RequestMapping("/")
 	String index() {
 		return "index";
@@ -38,8 +43,56 @@ public class Web {
 		return result;
 	}
 	
-	SessionFactory factory = new Configuration()
-		// .addPackage("entity")
-		.addAnnotatedClass(Station.class)
-		.buildSessionFactory();
+	@RequestMapping("/search")
+	String search(Model model, String data) {
+		if (data == null) {
+			model.addAttribute("result", new ArrayList());
+		} else {
+			Session database = factory.openSession();
+			Query query = database.createQuery(
+				"from Station where suburb like :data");
+			query.setParameter("data", "%" + data + "%");
+			List result = query.list();
+			model.addAttribute("result", result);
+			database.close();
+		}
+		return "search";
+	}
+	
+	@RequestMapping("/search-jsp")
+	String searchJsp(Model model, String data) {
+		if (data == null) {
+			model.addAttribute("result", new ArrayList());
+		} else {
+			Session database = factory.openSession();
+			Query query = database.createQuery(
+				"from Station where suburb like :data");
+			query.setParameter("data", "%" + data + "%");
+			List result = query.list();
+			model.addAttribute("result", result);
+			database.close();
+		}
+		return "search-jsp";
+	}
+	
+	@RequestMapping("/search-ajax")
+	String searchAjax() {
+		return "search-ajax";
+	}
+	
+	@RequestMapping("/search-angular")
+	String searchAngular() {
+		return "search-angular";
+	}
+	
+	@RequestMapping("/search-ajax-result") @ResponseBody
+	List searchAjaxResult(String data) {
+		Session database = factory.openSession();
+		Query query = database.createQuery(
+			"from Station where suburb like :data");
+		query.setParameter("data", "%" + data + "%");
+		List result = query.list();
+		database.close();
+		return result;
+	}
 }
