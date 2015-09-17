@@ -17,7 +17,7 @@ public class Web {
 	}
 	
 	@RequestMapping("/state") @ResponseBody
-	List stationByPostCode(String name) {
+	List stationByState(String name) {
 		Session database = factory.openSession();
 		Query query = database.createQuery(
 			"from Station where state = :name");
@@ -32,14 +32,7 @@ public class Web {
 		Double top, Double bottom, 
 		Double left, Double right) {
 		Session database = factory.openSession();
-		Query query = database.createQuery(
-			"from Station where " +
-			"latitude  <= :top   and latitude  >= :bottom and " +
-			"longitude <= :right and longitude >= :left");
-		query.setParameter("top",    top);
-		query.setParameter("bottom", bottom);
-		query.setParameter("left",   left);
-		query.setParameter("right",  right);
+		Query query = database.createQuery("from Station");
 		List result = query.list();
 		database.close();
 		return result;
