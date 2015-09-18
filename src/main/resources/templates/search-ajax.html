@@ -22,16 +22,31 @@
 			autofocus="autofocus" placeholder="Search" />
 		<input type="submit" class="btn btn-primary" value="Search" />
 	</form>
-
+	<h3></h3>
 	<ul>
 	</ul>
 </div>
 
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+
 <script>
+	$(function() {
+		$("#data").keyup(change);
+	});
+	
+	function change() {
+		var data = $("#data").val();
+		if (data.length >= 3) {
+			search();
+		}
+	}
+	
 	function search() {
 		var data = $("#data").val();
 		$.get("/search-ajax-result?data=" + data)
 		.success(function(result) {
+			$("h3").html("Found " + result.length + " station(s).");
 			$("ul").html("");
 			for (var i = 0; i < result.length; i++) {
 				$("ul").append("<li>" + result[i].suburb + "</li>");
@@ -40,7 +55,5 @@
 	}
 </script>
 
-<script src="/js/jquery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

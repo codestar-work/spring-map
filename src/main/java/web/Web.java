@@ -53,6 +53,7 @@ public class Web {
 				"from Station where suburb like :data");
 			query.setParameter("data", "%" + data + "%");
 			List result = query.list();
+			model.addAttribute("size", result.size());
 			model.addAttribute("result", result);
 			database.close();
 		}
@@ -69,6 +70,7 @@ public class Web {
 				"from Station where suburb like :data");
 			query.setParameter("data", "%" + data + "%");
 			List result = query.list();
+			model.addAttribute("size", result.size());
 			model.addAttribute("result", result);
 			database.close();
 		}

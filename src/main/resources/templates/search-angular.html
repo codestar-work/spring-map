@@ -19,11 +19,14 @@
 <div class="container" ng-app="MyApp" ng-controller="MyController">
 	<form ng-submit="search()">
 		<input type="text" class="form-control" 
-			name="data" id="data" ng-model="data"
+			name="data" id="data" 
+			ng-model="data" ng-change="change()"
 			autofocus="autofocus" placeholder="Search" />
 		<input type="submit" class="btn btn-primary" value="Search" />
 	</form>
-
+	<h3 ng-if="stations != null">
+		Found {{stations.length}} station(s).
+	</h3>
 	<ul>
 		<li ng-repeat="s in stations">{{s.suburb}}</li>
 	</ul>
@@ -31,6 +34,12 @@
 
 <script>
 	function MyController($scope, $http) {
+		$scope.change = function() {
+			if ($scope.data.length >= 3) {
+				$scope.search();
+			}
+		}
+		
 		$scope.search = function() {
 			$http.get("/search-ajax-result?data=" + $scope.data)
 			.success(function(result) {

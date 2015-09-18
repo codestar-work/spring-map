@@ -24,6 +24,14 @@
 		<input type="submit" class="btn btn-primary" value="Search" />
 	</form>
 
+	<%
+	Integer size = (Integer)request.getAttribute("size");
+	if (size != null) {
+	%>
+	<h3>Found ${size} station(s).</h3>
+	<%
+	}
+	%>	
 	<ul>
 	<%
 	List<Station> stations = (List<Station>)request.getAttribute("result");
