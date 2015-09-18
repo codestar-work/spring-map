@@ -11,8 +11,11 @@ public class Station {
 	public String postcode;
 	public Double latitude;
 	public Double longitude;
-	
+
 	public String getSuburb() {
 		return suburb;
+	}
+	public Long getId() {
+		return id;
 	}
 }

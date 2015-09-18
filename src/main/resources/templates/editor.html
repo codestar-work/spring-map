@@ -1,0 +1,18 @@
+<#include "header.html">
+<div class="container">
+	<h1>Editor</h1>
+	<form>
+		<input type="text" class="form-control" name="data"
+			autofocus="autofocus" placeholder="Search" />
+		<input type="submit" class="btn btn-primary" value="Search" />
+	</form>
+	<#if size?exists>
+	<h3>Found ${size} station(s).</h3>
+	</#if>
+	<ul>
+		<#list result as item>
+			<li><a href="/edit-item?id=${item.id}">${item.suburb}</a></li>
+		</#list>
+	</ul>
+</div>
+<#include "footer.html">

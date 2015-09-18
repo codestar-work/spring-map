@@ -1,0 +1,14 @@
+<#include "header.html">
+<div class="container">
+	<h1>Edit Item</h1>
+	<#list items as item>
+	<form method="post">
+		<input type="hidden" name="id" value="${item.id}" />
+		<input type="text" class="form-control" name="suburb"
+			autofocus="autofocus" placeholder="Suburb"
+			value="${item.suburb}" />
+		<input type="submit" class="btn btn-primary" value="Save" />
+	</form>
+	</#list>
+</div>
+<#include "footer.html">
