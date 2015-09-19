@@ -11,8 +11,9 @@
 	</#if>
 	<ul>
 		<#list result as item>
-			<li><a href="/edit-item?id=${item.id?c}"
-				>${item.suburb}</a></li>
+			<li>
+				<a href="/edit-item?id=${item.id?c}">${item.suburb}</a>
+			</li>
 		</#list>
 	</ul>
 </div>
