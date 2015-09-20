@@ -103,12 +103,7 @@ public class Web {
 	List searchAll(String data) {
 		Session database = factory.openSession();
 		Query query = database.createQuery(
-			"from Station where " +
-			"state like :data or " +
-			"suburb like :data or " +
-			"address like :data or " +
-			"postcode like :data");
-		query.setParameter("data", "%" + data + "%");
+			"from Station");
 		List result = query.list();
 		database.close();
 		return result;
