@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Web</title>
 	<link href="/css/bootstrap.css" rel="stylesheet" />
-	<link href="/css/main.css" rel="stylesheet" />
 	<script src="/js/angular.min.js"></script>
 	<style>
 		form > * {
@@ -18,8 +17,8 @@
 
 <div class="container" ng-app="MyApp" ng-controller="MyController">
 	<form ng-submit="search()">
-		<input type="text" class="form-control" 
-			name="data" id="data" 
+		<input type="text" class="form-control"
+			name="data" id="data"
 			ng-model="data" ng-change="change()"
 			autofocus="autofocus" placeholder="Search" />
 		<input type="submit" class="btn btn-primary" value="Search" />
@@ -39,7 +38,7 @@
 				$scope.search();
 			}
 		}
-		
+
 		$scope.search = function() {
 			$http.get("/search-ajax-result?data=" + $scope.data)
 			.success(function(result) {

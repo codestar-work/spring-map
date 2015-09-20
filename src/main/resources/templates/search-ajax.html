@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>Web</title>
 	<link href="/css/bootstrap.css" rel="stylesheet" />
-	<link href="/css/main.css" rel="stylesheet" />
 	<style>
 		form > * {
 			margin-top: 10px;
@@ -17,7 +16,7 @@
 
 <div class="container">
 	<form action="javascript:search()">
-		<input type="text" class="form-control" 
+		<input type="text" class="form-control"
 			name="data" id="data"
 			autofocus="autofocus" placeholder="Search" />
 		<input type="submit" class="btn btn-primary" value="Search" />
@@ -34,14 +33,14 @@
 	$(function() {
 		$("#data").keyup(change);
 	});
-	
+
 	function change() {
 		var data = $("#data").val();
 		if (data.length >= 3) {
 			search();
 		}
 	}
-	
+
 	function search() {
 		var data = $("#data").val();
 		$.get("/search-ajax-result?data=" + data)

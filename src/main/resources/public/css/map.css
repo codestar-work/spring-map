@@ -1,0 +1,51 @@
+html, body {
+	height: 100%;
+}
+#map {
+	height: 100%;
+}
+#search-panel {
+	position: absolute;
+	top: -1px;
+	left: 120px;
+	width: 240px;
+	border-radius: 8px;
+	opacity: .9;
+	transition: all .2s ease-in-out;
+	padding: 0;
+	padding-right: 10px;
+}
+#search-result {
+	position: fixed;
+	width: 228px;
+	height: 120px;
+	top: 60px;
+	left: 120px;
+	padding: 4px;
+	border-radius: 4px;
+	opacity: .9;
+	overflow-y: auto;
+	list-style-type: none;
+	background: white;
+	display: none;
+}
+#search-result > li {
+	overflow: hidden;
+	white-space: nowrap;
+}
+#search-result > li a {
+	padding: 4px 4px;
+	border-radius: 4px;
+	display: block;
+	color: #333;
+}
+#search-result > li a:hover {
+	background: #428bca;
+	color: white;
+}
+span.suburb {
+	font-weight:800;
+}
+span.address {
+	font-weight: 200;
+}

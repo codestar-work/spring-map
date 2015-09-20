@@ -1,104 +1,138 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Map</title>
-	<meta name="viewport" content="initial-scale=1.0" />
-	<meta charset="utf-8" />
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-			padding: 0;
-		}
-		#map {
-			height: 100%;
-		}
-	</style>
-</head>
-<body>
-	<div id="map"></div>
-	
-	<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
-		async defer>
-	</script>
-		
-	<script>
-	var map;
-	var markers = [];
-	var icon;
-	function initMap() {
-		map = new google.maps.Map(document.getElementById('map'), {
-			center: {lat: -34, lng: 150},
-			zoom: 8
-			});
-		google.maps.event.addListener(map, 'bounds_changed', move);
-		icon = {
-			url: "/icon-caltex.png",
-			size:       new google.maps.Size (80, 80),
-			origin:     new google.maps.Point( 0,  0),
-			anchor:     new google.maps.Point(20, 20),
-			scaledSize: new google.maps.Size (40, 40)
-		};
+<#include "header.html">
+<link href="/css/map.css" rel="stylesheet" />
+
+<div id="map">
+</div>
+
+<div id="search-panel">
+	<form action="javascript:search()">
+		<div class="input-group">
+		<input class="form-control" placeholder="Search"
+			autofocus="autofocus" autocomplete="off" id="data" />
+		<span class="input-group-btn">
+			<button class="btn btn-primary" type="button">Search</button>
+		</span>
+		</div>
+	</form>
+</div>
+
+<ul id="search-result">
+</ul>
+
+<script src="https://maps.googleapis.com/maps/api/js?callback=initMap"
+	async defer>
+</script>
+<script src="/js/jquery.js"></script>
+<script>
+$(function() {
+	$("#data").keyup(change);
+});
+
+function change() {
+	var data = $("#data").val();
+	if (data.length == 0) {
+		$("#search-result").hide();
 	}
-	
-	function move() {
-		var bounds = map.getBounds();
-		var ne = bounds.getNorthEast();
-		var sw = bounds.getSouthWest();
-		var rect = {};
-		rect.top    = ne.lat();
-		rect.bottom = sw.lat();
-		rect.right  = ne.lng();
-		rect.left   = sw.lng();
-		// console.log(rect);
-		$.get("/station-list", rect)
-		.success(function(result) {
-			// console.log("loaded " + result.length + " stations");
-			for (var m in markers) {
-				markers[m].found = false;
-			}
-			
-			for (var i = 0; i < result.length; i++) {
-				result[i].found = true;
-				if (markers[result[i].id]) {
-					markers[result[i].id].found = true;
-				} else {
-					result[i].marker = new google.maps.Marker({
-						position: {
-							lat: result[i].latitude, 
-							lng: result[i].longitude},
-						map: map,
-						icon: icon,
-						title: result[i].suburb
-					});
-					markers[result[i].id] = result[i];
-				}
-			}
-			
-			// remove marker from the map, remove from "markers"
-			var dead = [];
-			for (var m in markers) {
-				if (!markers[m].found) {
-					dead.push(markers[m].id);
-				}
-			}
-			for (var i = 0; i < dead.length; i++) {
-				var marker = markers[dead[i]];
-				marker.marker.setMap(null);
-				delete markers[dead[i]];
-			}
-			
-			var count = 0;
-			for (var m in markers) {
-				count++;
-			}
-			// console.log("station count = " + count);
+	if (data.length >= 3) {
+		search();
+	}
+}
+
+function search() {
+	var data = $("#data").val();
+	$.get("/search-all?data=" + data)
+	.success(function(result) {
+		$("#search-result").html("");
+		for (var i = 0; i < result.length; i++) {
+			$("#search-result").append(
+				"<li><a href='javascript:goto(-35.241499, 150.427265)'>" +
+				"<span class='suburb'>Demo</span> " +
+				"<span class='address'>123 Demo Street</span>" +
+				"</a></li>");
+		}
+		$("#search-result").show();
+	});
+}
+
+function goto(latitude, longitude) {
+	map.panTo({lat: latitude, lng: longitude});
+	map.setZoom(14);
+}
+
+var map;
+var markers = [];
+var icon;
+function initMap() {
+	map = new google.maps.Map(document.getElementById('map'), {
+		center: {lat: -34, lng: 150},
+		zoom: 8
 		});
+	google.maps.event.addListener(map, 'bounds_changed', move);
+	icon = {
+		url: "/icon-caltex.png",
+		size:       new google.maps.Size (80, 80),
+		origin:     new google.maps.Point( 0,  0),
+		anchor:     new google.maps.Point(20, 20),
+		scaledSize: new google.maps.Size (40, 40)
+	};
+}
 
-	}
-	</script>
-	
-	<script src="/js/jquery.min.js"></script>
+function move() {
+	var bounds = map.getBounds();
+	var ne = bounds.getNorthEast();
+	var sw = bounds.getSouthWest();
+	var rect = {};
+	rect.top    = ne.lat();
+	rect.bottom = sw.lat();
+	rect.right  = ne.lng();
+	rect.left   = sw.lng();
+	// console.log(rect);
+	$.get("/station-list", rect)
+	.success(function(result) {
+		// console.log("loaded " + result.length + " stations");
+		for (var m in markers) {
+			markers[m].found = false;
+		}
 
+		for (var i = 0; i < result.length; i++) {
+			result[i].found = true;
+			if (markers[result[i].id]) {
+				markers[result[i].id].found = true;
+			} else {
+				result[i].marker = new google.maps.Marker({
+					position: {
+						lat: result[i].latitude,
+						lng: result[i].longitude},
+					map: map,
+					icon: icon,
+					title: result[i].suburb
+				});
+				markers[result[i].id] = result[i];
+			}
+		}
+
+		// remove marker from the map, remove from "markers"
+		var dead = [];
+		for (var m in markers) {
+			if (!markers[m].found) {
+				dead.push(markers[m].id);
+			}
+		}
+		for (var i = 0; i < dead.length; i++) {
+			var marker = markers[dead[i]];
+			marker.marker.setMap(null);
+			delete markers[dead[i]];
+		}
+
+		var count = 0;
+		for (var m in markers) {
+			count++;
+		}
+		// console.log("station count = " + count);
+	});
+
+}
+</script>
+<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>
