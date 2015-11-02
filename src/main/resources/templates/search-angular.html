@@ -36,6 +36,8 @@
 		$scope.change = function() {
 			if ($scope.data.length >= 3) {
 				$scope.search();
+			} else {
+				$scope.stations = null;
 			}
 		}
 
@@ -46,7 +48,8 @@
 			});
 		}
 	}
-	angular.module('MyApp',[]).controller('MyController', MyController);
+	var app = angular.module('MyApp',[]);
+	app.controller('MyController', MyController);
 </script>
 
 
