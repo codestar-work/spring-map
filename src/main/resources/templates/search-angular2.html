@@ -13,9 +13,15 @@ var MyComponent = ng
 	template: `
 		<input type='text' class='form-control'
 			autofocus="autofocus" placeholder="Search"
-			#query (keyup.enter)="search(query.value)" />
+			#query (keyup.enter)="search(query.value)"
+			(keyup)="change(query.value)" />
 		<input type="submit" value="Search" class="btn btn-primary"
 			(click)="search(query.value)" />
+		<ul>
+			<li *ng-for="#item of data">
+				{{ item.suburb }} - {{ item.address }}
+			</li>
+		<ul>
 	`
 })
 .Class({
@@ -23,7 +29,16 @@ var MyComponent = ng
 		this.name = 'Angular';
 	},
 	search: function(query) {
-		console.log(query);
+		fetch("/search-ajax-result?data=" + query)
+		.then(response => response.json())
+		.then(data => this.data = data);
+	},
+	change: function(query) {
+		if (query.length >= 3) {
+			this.search(query);
+		} else {
+			this.data = [];
+		}
 	}
 });
 
