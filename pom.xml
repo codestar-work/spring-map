@@ -18,7 +18,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
-		
+
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -27,9 +27,9 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>RELEASE</version>
+			<version>4.3.11.Final</version>
 		</dependency>
-		
+
 		<!-- JSP -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,7 +47,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>

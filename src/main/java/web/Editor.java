@@ -64,7 +64,7 @@ public class Editor {
 
 	@RequestMapping("/logout")
 	String logout(HttpSession session) {
-		session.removeAttribute("email");
+		session.removeAttribute("user");
 		session.invalidate();
 		return "redirect:/";
 	}
