@@ -4,6 +4,12 @@
 <script type="text/babel">
 var MyComponent = React.createClass({
 	render: function() {
+		var table = [];
+		for (var i = 0; i < this.state.result.length; i++) {
+			var value = this.state.result[i];
+			table.push(<li>{value.suburb} - {value.address}</li>);
+		}
+
 		return (
 			<div>
 				<form onSubmit={this.search}>
@@ -19,14 +25,7 @@ var MyComponent = React.createClass({
 						onClick={this.search}
 					/>
 				</form>
-
-				<ul>
-				{
-					this.state.result.map(function(value, index) {
-						return <li>{value.suburb} - {value.address}</li>;
-					})
-				}
-				</ul>
+				<ul>{table}</ul>
 			</div>
 		);
 	},
