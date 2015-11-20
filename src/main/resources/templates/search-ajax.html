@@ -51,7 +51,14 @@
 			$("h3").html("Found " + result.length + " station(s).");
 			$("ul").html("");
 			for (var i = 0; i < result.length; i++) {
-				$("ul").append("<li>" + result[i].suburb + "</li>");
+				// $("ul").append("<li>" + result[i].suburb + "</li>");
+				$("ul").append(
+					`
+					<li>
+						<#noparse>${result[i].suburb}</#noparse>
+					</li>
+					`
+				);
 			}
 		});
 	}
