@@ -93,6 +93,11 @@ public class Web {
 		return "search-angular2";
 	}
 
+	@RequestMapping("/search-react")
+	String searchReact() {
+		return "search-react";
+	}
+
 	@RequestMapping("/search-ajax-result") @ResponseBody
 	List searchAjaxResult(String data) {
 		Session database = factory.openSession();
