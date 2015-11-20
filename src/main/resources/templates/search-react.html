@@ -43,14 +43,17 @@ var MyComponent = React.createClass({
 		.then(function(response) {
 			return response.json();
 		})
-		.then(function(data) {
-			this.setState({result: data});
-		}.bind(this));
+		.then(this.show);
+	},
+
+	show: function(data) {
+		console.table(data);
+		this.setState({result: data});
 	},
 
 	getInitialState: function() {
 		return { text: '', result: []};
-	},
+	}
 });
 
 ReactDOM.render(<MyComponent />,
