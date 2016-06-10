@@ -75,7 +75,7 @@ public class Web {
 			model.addAttribute("result", result);
 			database.close();
 		}
-		return "search-jsp";
+		return "search-jsp.jsp";
 	}
 
 	@RequestMapping("/search-ajax")
