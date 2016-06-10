@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.*;
 @Controller
 public class MyController {
 	
+	@Autowired
+	private StationRepository repository;
+	
 	@RequestMapping("/list") @ResponseBody
 	Iterable list() {
 		return repository.findAll();
@@ -25,6 +28,9 @@ public class MyController {
 		return repository.countByState(state);
 	}
 	
-	@Autowired
-	private StationRepository repository;
+	@RequestMapping("/similar") @ResponseBody
+	List<Station> similar(String name) {
+		return repository.showSimilar("%" + name + "%");
+	}
+	
 }
