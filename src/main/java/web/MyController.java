@@ -12,9 +12,19 @@ public class MyController {
 	
 	@RequestMapping("/list") @ResponseBody
 	Iterable list() {
-		return stations.findAll();
+		return repository.findAll();
+	}
+	
+	@RequestMapping("/find-by") @ResponseBody
+	List<Station> find(String state) {
+		return repository.findByState(state);
+	}
+	
+	@RequestMapping("/count") @ResponseBody
+	Long count(String state) {
+		return repository.countByState(state);
 	}
 	
 	@Autowired
-	private StationDao stations;
+	private StationRepository repository;
 }
